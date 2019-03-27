@@ -14,61 +14,39 @@ app.use(express.static('public'));
 const mongoose = require('mongoose');
 
 // connect to the database
-mongoose.connect('mongodb://localhost:27017/museum', {
+mongoose.connect('mongodb://localhost:27017/mealList', {
     useNewUrlParser: true
 });
 
-//set images to be stored in /public/images/
-const multer = require('multer')
-const upload = multer({
-    dest: staticBasePath + "images/",
-    limits: {
-        fileSize: 10000000
-    }
-});
-
-//creat schema
-const itemSchema = new mongoose.Schema({
+//create schema
+const mealSchema = new mongoose.Schema({
     title: String,
-    path: String,
-    description: String,
+    cost: Double,
 });
 
 //create collection in the database
-const Item = mongoose.model('Item', itemSchema);
+const Meal = mongoose.model('Meal', mealSchema);
 
-// Upload a photo. Uses the multer middleware for the upload and then returns
-// the path where the photo is stored in the file system.
-app.post('/api/photos', upload.single('photo'), async (req, res) => {
-    // Just a safety check
-    if (!req.file) {
-        return res.sendStatus(400);
-    }
-    res.send({
-        path: "/images/" + req.file.filename
-    });
-});
 
-// Create a new item in the museum: takes a title and a path to an image.
-app.post('/api/items', async (req, res) => {
-    const item = new Item({
+// Create a new meal: takes a title and a cost.
+app.post('/api/meals', async (req, res) => {
+    const meal = new Meal({
         title: req.body.title,
-        path: req.body.path,
-        description: req.body.description,
+        cost: req.body.cost,
     });
     try {
-        await item.save();
-        res.send(item);
+        await meal.save();
+        res.send(meal);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
 });
 
-app.get('/api/items', async (req, res) => {
+app.get('/api/meals', async (req, res) => {
     try {
-        let items = await Item.find();
-        res.send(items);
+        let meals = await Meal.find();
+        res.send(meals);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -76,27 +54,21 @@ app.get('/api/items', async (req, res) => {
 });
 
 //delete API call
-const fs = require("fs");
-app.delete("/api/items/:id", async (req, res) => {
+app.delete("/api/meals/:id", async (req, res) => {
     try {
         //grab ID
         let id = req.params.id;
-        //find item in database
-        Item.find({
+        //find meal in database
+        Meal.find({
             "_id": id
         }, (err, docs) => {
             if (err) {
                 console.log(err);
                 return;
             }
-            //delete it
-            fs.unlink(staticBasePath + docs[0].path, (err) => {
-                if (err)
-                    console.log(err);
-            });
 
             //remove from database
-            Item.deleteOne({
+            Meal.deleteOne({
                 "_id": id
             }, (err) => {
                 if (err)
@@ -109,10 +81,10 @@ app.delete("/api/items/:id", async (req, res) => {
     }
 });
 
-app.put("/api/items/:id", (req, res) => {
+app.put("/api/meals/:id", (req, res) => {
     try {
         let id = req.params.id;
-        Item.findOne({
+        Meal.findOne({
             "_id": id
         }, (err, doc) => {
             if (err) {
