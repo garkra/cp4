@@ -10,7 +10,7 @@ let app = new Vue({
         currentCost: 0,
         currentDayMeal: '',
         totalCost: 0,
-
+        mealInProgress: null,
     },
     computed: {
         // This function takes the cost from each meal and sums them.
@@ -33,16 +33,19 @@ let app = new Vue({
                 currentDayMeal: null,
             };
         }
+        this.getmeals();
     },
     methods: {
-        addRecipe() {
+        async addRecipe() {
             if (this.currentMeal !== "") {
                 if (this.currentCost === "")
                     this.currentCost = 0;
-                this.mealList.push({
+                await this.upload({
                     title: this.currentMeal,
                     cost: this.currentCost,
                 });
+
+                this.getmeals();
                 this.currentMeal = "";
                 this.currentCost = 0;
             }
@@ -68,20 +71,16 @@ let app = new Vue({
         async getmeals() {
             try {
                 let response = await axios.get("/api/meals");
-                this.meals = response.data;
+                this.mealList = response.data;
                 return true;
             } catch (error) {
                 console.log(error);
             }
         },
-        selectMeal(meal) {
-            this.findTitle = "";
-            this.findMeal = meal;
-        },
         async deleteMeal(meal) {
             try {
                 axios.delete("/api/meals/" + meal._id);
-                this.findMeal = null;
+                this.mealInProgress = null;
                 this.getmeals();
                 return true;
             } catch (error) {
@@ -91,10 +90,10 @@ let app = new Vue({
         async editMeal(meal) {
             try {
                 await axios.put("/api/meals/" + meal._id, {
-                    title: this.findMeal.title,
-                    cost: this.findMeal.cost,
+                    title: this.mealInProgress.title,
+                    cost: this.mealInProgress.cost,
                 });
-                this.findMeal = null;
+                this.mealInProgress = null;
                 this.getmeals();
                 return true;
             } catch (error) {
