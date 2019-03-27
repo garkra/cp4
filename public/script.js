@@ -57,11 +57,10 @@ let app = new Vue({
         },
         async upload(meal) {
             try {
-                let res = await axios.post('/api/meals', {
+                await axios.post('/api/meals', {
                     title: meal.title,
                     cost: meal.cost,
                 });
-                this.addMeal = res.data;
             } catch (error) {
                 console.log(error);
             }
