@@ -35,13 +35,13 @@
                     <div class="day-meals">
 
                         <select v-model="day.currentDayMeal">
-                            <option v-for="meal in mealList">{{meal.name}} ${{meal.cost}}</option>
+                            <option v-for="meal in mealList">{{meal.title}} ${{meal.cost}}</option>
 
                         </select>
                         <button v-on:click="addMealToDay(day)">Add Meal</button>
 
                         <ul>
-                            <li v-for="meal in day.meals">{{meal.name}}</li>
+                            <li v-for="meal in day.meals">{{meal.title}}</li>
                         </ul>
                     </div>
                 </div>

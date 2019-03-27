@@ -2,7 +2,7 @@ let app = new Vue({
     el: '#app',
     data: {
         mealList: [{
-            name: "Nothing",
+            title: "Nothing",
             cost: 0,
         }, ],
         days: [],
@@ -40,7 +40,7 @@ let app = new Vue({
                 if (this.currentCost === "")
                     this.currentCost = 0;
                 this.mealList.push({
-                    name: this.currentMeal,
+                    title: this.currentMeal,
                     cost: this.currentCost,
                 });
                 this.currentMeal = "";
@@ -50,16 +50,16 @@ let app = new Vue({
         addMealToDay(day) {
             let mealArray = day.currentDayMeal.split("$");
             day.meals.push({
-                name: mealArray[0],
+                title: mealArray[0],
                 cost: mealArray[1],
             });
             this.totalCost += Number(mealArray[1]);
         },
-        async upload() {
+        async upload(meal) {
             try {
                 let res = await axios.post('/api/meals', {
-                    title: this.title,
-                    cost: this.cost,
+                    title: meal.title,
+                    cost: meal.cost,
                 });
                 this.addMeal = res.data;
             } catch (error) {
@@ -81,7 +81,7 @@ let app = new Vue({
         },
         async deleteMeal(meal) {
             try {
-                let response = axios.delete("/api/meals/" + meal._id);
+                axios.delete("/api/meals/" + meal._id);
                 this.findMeal = null;
                 this.getmeals();
                 return true;
@@ -91,7 +91,7 @@ let app = new Vue({
         },
         async editMeal(meal) {
             try {
-                let response = await axios.put("/api/meals/" + meal._id, {
+                await axios.put("/api/meals/" + meal._id, {
                     title: this.findMeal.title,
                     cost: this.findMeal.cost,
                 });
