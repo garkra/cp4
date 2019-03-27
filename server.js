@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/mealList', {
 //create schema
 const mealSchema = new mongoose.Schema({
     title: String,
-    cost: Double,
+    cost: Number,
 });
 
 //create collection in the database
@@ -43,6 +43,7 @@ app.post('/api/meals', async (req, res) => {
     }
 });
 
+//Get the meals from the database
 app.get('/api/meals', async (req, res) => {
     try {
         let meals = await Meal.find();
@@ -92,7 +93,7 @@ app.put("/api/meals/:id", (req, res) => {
                 return;
             }
             doc.title = req.body.title;
-            doc.description = req.body.description;
+            doc.cost = req.body.cost;
             doc.save();
         });
     } catch (error) {

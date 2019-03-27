@@ -55,6 +55,53 @@ let app = new Vue({
             });
             this.totalCost += Number(mealArray[1]);
         },
+        async upload() {
+            try {
+                let res = await axios.post('/api/meals', {
+                    title: this.title,
+                    cost: this.cost,
+                });
+                this.addMeal = res.data;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getmeals() {
+            try {
+                let response = await axios.get("/api/meals");
+                this.meals = response.data;
+                return true;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        selectMeal(meal) {
+            this.findTitle = "";
+            this.findMeal = meal;
+        },
+        async deleteMeal(meal) {
+            try {
+                let response = axios.delete("/api/meals/" + meal._id);
+                this.findMeal = null;
+                this.getmeals();
+                return true;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async editMeal(meal) {
+            try {
+                let response = await axios.put("/api/meals/" + meal._id, {
+                    title: this.findMeal.title,
+                    cost: this.findMeal.cost,
+                });
+                this.findMeal = null;
+                this.getmeals();
+                return true;
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 
 });
