@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/styles.css">
+    <title></title>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="header">
+            <h1 class="centered">Cost of Survival</h1>
+
+            <!-- Button to add meals to mealList Vue object -->
+            <form v-on:submit.prevent="addRecipe">
+                <h3>Meal Name</h3>
+                <input type="text" v-model="currentMeal">
+                <h3>Meal Cost<h3>
+                        <input type="number" step=".01" v-model="currentCost">
+                        <button type="submit">Add Recipe and Cost</button>
+            </form>
+
+        </div>
+        <h2 class="centered">Total Cost of Meals for the Week: ${{totalCost}}</h2>
+        <ul>
+            <li v-for="day in days">
+                <!-- Box for Day -->
+                <div class="day-flex">
+                    <div class="day-name">
+                        <h2>{{day.day_name}}</h2>
+                    </div>
+
+                    <!-- Box for meals -->
+                    <div class="day-meals">
+
+                        <select v-model="day.currentDayMeal">
+                            <option v-for="meal in mealList">{{meal.name}} ${{meal.cost}}</option>
+
+                        </select>
+                        <button v-on:click="addMealToDay(day)">Add Meal</button>
+
+                        <ul>
+                            <li v-for="meal in day.meals">{{meal.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
+    <script src="/script.js"></script>
+
+    <footer class="footer">
+        <span><a href="https://github.com/garkra/cp3_vue">Github Repository Link</a></span>
+    </footer>
+</body>
+
+
+</html>

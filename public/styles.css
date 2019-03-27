@@ -1,0 +1,63 @@
+.day-name {
+    width: 20%;
+    margin: 10px;
+    flex: 1;
+
+}
+
+body {
+    margin: 0;
+    background-color: #f0f0df;
+}
+
+.day-meals {
+    width: 80%;
+    margin: 0;
+    padding: 5px;
+    flex: 4;
+    border-left: 2px black solid;
+}
+
+.day-flex {
+    display: flex;
+    width: 80%;
+    border: 2px black solid;
+    margin: 0.5em auto;
+    background-color: white;
+}
+
+.header {
+    background-color: #ff9000;
+    padding: 1.5em;
+    text-align: center;
+}
+
+input {
+    display: block;
+    margin: .25em auto 1em auto;
+}
+
+ul {
+    list-style-type: none;
+}
+
+h3 {
+    margin: 1em 0 0.3em 0;
+}
+
+.centered {
+    text-align: center;
+}
+
+.footer {
+    text-align: center;
+    font-size: 1em;
+    margin: 1em auto;
+}
+
+.footer a,
+:link,
+:visited {
+    color: #063442;
+    text-decoration: none;
+}
