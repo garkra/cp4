@@ -13,14 +13,6 @@
             <h1 class="centered">Cost of Survival</h1>
             <h2 class="centered"><a href="/listeditor.html">Recipe List Editor</a></h2>
 
-            <!-- Button to add meals to mealList Vue object -->
-            <form v-on:submit.prevent="addRecipe">
-                <h3>Meal Name</h3>
-                <input type="text" v-model="currentMeal">
-                <h3>Meal Cost<h3>
-                        <input type="number" step=".01" v-model="currentCost">
-                        <button type="submit">Add Recipe and Cost</button>
-            </form>
 
         </div>
         <h2 class="centered">Total Cost of Meals for the Week: ${{totalCost}}</h2>

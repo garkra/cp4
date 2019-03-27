@@ -1,10 +1,7 @@
 let app = new Vue({
     el: '#app',
     data: {
-        mealList: [{
-            title: "Nothing",
-            cost: 0,
-        }, ],
+        mealList: [],
         days: [],
         currentMeal: "",
         currentCost: 0,
@@ -90,8 +87,8 @@ let app = new Vue({
         async editMeal(meal) {
             try {
                 await axios.put("/api/meals/" + meal._id, {
-                    title: this.mealInProgress.title,
-                    cost: this.mealInProgress.cost,
+                    title: meal.title,
+                    cost: meal.cost,
                 });
                 this.mealInProgress = null;
                 this.getmeals();

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/styles.css">
+    <title></title>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="header">
+            <h1 class="centered">Cost of Survival</h1>
+            <h2 class="centered"><a href="/">Home Page</a></h2>
+
+            <!-- Button to add meals to mealList Vue object -->
+            <form v-on:submit.prevent="addRecipe">
+                <h3>Meal Name</h3>
+                <input type="text" v-model="currentMeal">
+                <h3>Meal Cost<h3>
+                        <input type="number" step=".01" v-model="currentCost">
+                        <button type="submit">Add Recipe and Cost</button>
+            </form>
+        </div>
+
+        <ul>
+            <li v-for="meal in mealList">
+                <input type="text" v-model="meal.title">
+                <span>Cost: $</span><input type="number" step=".01" v-model="meal.cost">
+                <button v-on:click="editMeal(meal)">Update</button>
+                <button v-on:click="deleteMeal(meal)">Delete</button>
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+        integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
+    <script src="/script.js"></script>
+
+    <footer class="footer">
+        <span><a href="https://github.com/garkra/cp4.git">Github Repository Link</a></span>
+    </footer>
+</body>
+
+
+</html>
