@@ -32,6 +32,20 @@ body {
     text-align: center;
 }
 
+.mealList {
+    text-align: center;
+    /*margin: 1em auto;
+*/
+}
+
+.inline {
+    display: inline;
+}
+
+.extra-left-margin {
+    margin-left: 2em;
+}
+
 input {
     display: block;
     margin: .25em auto 1em auto;

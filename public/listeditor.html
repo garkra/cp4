@@ -25,10 +25,13 @@
 
         <ul>
             <li v-for="meal in mealList">
-                <input type="text" v-model="meal.title">
-                <span>Cost: $</span><input type="number" step=".01" v-model="meal.cost">
-                <button v-on:click="editMeal(meal)">Update</button>
-                <button v-on:click="deleteMeal(meal)">Delete</button>
+                <div class="mealList">
+                    <input type="text" v-model="meal.title" class="inline">
+                    <span class="extra-left-margin"> Cost: $</span><input type="number" step=".01" v-model="meal.cost"
+                        class="inline">
+                    <button v-on:click="editMeal(meal)">Update</button>
+                    <button v-on:click="deleteMeal(meal)">Delete</button>
+                </div>
             </li>
         </ul>
 
