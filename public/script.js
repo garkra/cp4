@@ -34,7 +34,7 @@ let app = new Vue({
     },
     methods: {
         async addRecipe() {
-            if (this.currentMeal !== "") {
+            if (this.currentMeal !== "" && this.currentcost >= 0) {
                 if (this.currentCost === "")
                     this.currentCost = 0;
                 await this.upload({
